@@ -5,9 +5,10 @@
  * Use of this source code is governed by an GNU General Public License v3.0 license that can be
  * found in the LICENSE file at https://github.com/christian-klein/volt-hackathon/blob/master/LICENSE
  */
-
-.lfMnBody {
-    background-color: aquamarine;
+.lfVHTitle {
+    font-size: 2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #000;
 }
 
  /* Form - centered with a drop shadow*/
