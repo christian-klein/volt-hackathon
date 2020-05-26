@@ -6,4 +6,15 @@
  * found in the LICENSE file at https://github.com/christian-klein/volt-hackathon/blob/master/LICENSE
  */
 
- 
+.lfMnBody {
+    background-color: aquamarine;
+}
+
+ /* Form - centered with a drop shadow*/
+.lfMn .lfAppFormArea .lfFormBox {
+    -moz-box-shadow: 5px 5px 12px #AEA4A4;
+    -webkit-box-shadow: 5px 5px 12px #AEA4A4;
+    box-shadow: 5px 5px 12px #AEA4A4;
+    margin-right: auto; 
+    margin-left: auto; 
+ }
