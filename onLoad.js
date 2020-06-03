@@ -1,22 +1,51 @@
+// PAGE SETUP: Add the html header to all pages
+
+
+
+
 // PAGEVALIDATOR: object to hold validation info
 app.getSharedData().pageValidStatus = {
     welcome: {
-        valid: false
+        valid: false,
+        page: P_Welcome,
+        copyHeaderTo: false,
+        headerHTTPField: F_HTMLHeader_Welcome
     },
     general: {
-        valid: false
+        valid: false,
+        page: P_General,
+        copyHeaderTo: true,
+        headerHTTPField: F_HTMLHeader_General
     },
     addresses: {
-        valid: false
+        valid: false,
+        page: P_Addresses,
+        copyHeaderTo: true,
+        headerHTTPField: F_HTMLHeader_Addresses
     },
     user: {
-        valid: false
+        valid: false,
+        page: P_User,
+        copyHeaderTo: true,
+        headerHTTPField: F_HTMLHeader_User
     },
     pay: {
-        valid: false
+        valid: false,
+        page: P_Pay,
+        copyHeaderTo: true,
+        headerHTTPField: F_HTMLHeader_Pay
     },
     commodity: {
-        valid: false
+        valid: false,
+        page: P_Codes,
+        copyHeaderTo: true,
+        headerHTTPField: F_HTMLHeader_Codes
+    },
+    test: {
+        valid: false,
+        page: P_Test,
+        copyHeaderTo: true,
+        headerHTTPField: F_HTMLHeader_Test
     }
 };
 
