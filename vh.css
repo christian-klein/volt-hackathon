@@ -6,11 +6,11 @@
  * found in the LICENSE file at https://github.com/christian-klein/volt-hackathon/blob/master/LICENSE
  */
 
- .lfBanner {
+.lfBanner {
      background-color: burlywood;
- }
+}
 
- .lfVHTitle {
+.lfVHTitle {
     font-size: 2em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #000;
@@ -23,76 +23,92 @@
     box-shadow: 5px 5px 12px #AEA4A4;
     margin-right: auto; 
     margin-left: auto; 
- }
+}
 
- .divTable{
-    display: table;
+/* HEADER */
+
+.vh-header {
+    overflow: hidden;
+}
+
+.vh-header table {
     width: 100%;
 }
-.divTableRow {
-    display: table-row;
-}
 
-.divTableHeading {
-    background-color: #EEE;
-    display: table-header-group;
-}
-.divTableCellIcon, .divTableHead {
-    border: 0em;
-    color:#2980b9;
-    display: table-cell;
-    padding: 3px 0px;
-    text-align: center;
-}
-.divTableCellText, .divTableHead {
-    border: 0em;
-    display: table-cell;
-    padding: 3px 0px;
-    text-align: center;
-    font-size: large;
-    font-weight: bold;
-    color:#2980b9;
-}
-.divTableHeading {
-    background-color: #EEE;
-    display: table-header-group;
-    font-weight: bold;
-}
-.divTableFoot {
-    background-color: #EEE;
-    display: table-footer-group;
-    font-weight: bold;
-}
-.divTableBody {
-    display: table-row-group;
-}
+/* .vh-header td {
+} */
 
-.vhgradient {
-    position: relative;
+.vh-header-table-separator {
     font-size: 2em;
-    margin-top: 0;
-    font-weight: bold;
-} 
-
-.vhgradient a {
-    text-decoration: none;
-    color: #2980b9;
-    position: absolute;
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), color-stop(50%, rgba(0,0,0,.5)), to(rgba(0,0,0,1)));
+    color:#2980b9;
+    margin: 0;
 }
 
-.vhgradient:after {
-    content: attr(data-content); 
-    color: #d6d6d6;
-    text-shadow: 0 2px 0 rgb(29, 25, 82);
+.vh-header-table-cell-icon {
+	font-size: 3em;
+	text-align: center;
+	/* width: 90px; */
+	margin: 0;
+	padding-bottom: 10px;
+    height: 90px;
+    color:#2980b9;
+
 }
 
-.vh_hide {
-    visibility: hidden;
-    width: 0;
-    height: 0;
+.vh-header-table-cell-text {
+	font-weight: bold;
+	position: relative;
+	top: -21px;
+	font-size: 1.5em;
+	text-align: right;
+	height: 100px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	padding-right: 10px;
+    color:#2980b9;
 }
 
+.vh-check {
+    color: rgb(0, 162, 40);
+    font-size: 0.75em;
+}
+
+.vh-green-fade {
+    color: rgba(42, 189, 37, 0.5)
+}
+
+.vh-highlight-current {
+    border-right-width: 3px;
+}
+
+.rotate {
+
+    transform: rotate(-90deg);
+  
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+  
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+  
+    /* IE */
+    -ms-transform: rotate(-90deg);
+  
+    /* Opera */
+    -o-transform: rotate(-90deg);
+  
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.vh-hidden{
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    opacity: 0;
+}
+
+/* COUNTRY DROPDOWN */
 .value-list {
     list-style: none;
     margin-top: -1rem;

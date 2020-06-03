@@ -1,5 +1,8 @@
 // PAGEVALIDATOR: object to hold validation info
 app.getSharedData().pageValidStatus = {
+    welcome: {
+        valid: false
+    },
     general: {
         valid: false
     },
@@ -17,21 +20,58 @@ app.getSharedData().pageValidStatus = {
     }
 };
 
+// PAGEVALIDATOR: highlight current page
+app.getSharedData().highlightCurrentPage = function(page) {
+    debugger;
+    let pageText = document.querySelectorAll('.vh-id-header-'+page+'-text');
+    for (let i = 0; i < pageText.length; i++){
+        pageText[i].classList.add('vh-highlight-current');
+    }
+}
+
+// PAGEVALIDATOR: remove highlight from current page
+app.getSharedData().unhighlightCurrentPage = function(page) {
+    let pageText = document.querySelectorAll('.vh-id-header-'+page+'-text');
+    for (let i = 0; i < pageText.length; i++){
+        pageText[i].classList.remove('vh-highlight-current');
+    }
+}
+
+// PAGEVALIDATOR: step through all icons and adjust coloring based on validity
+app.getSharedData().adjustHeader = function() {
+
+    var stateObject = app.getSharedData().pageValidStatus;
+    var pageStatus = false;
+
+    for (let pagekey of Object.keys(stateObject)){
+        pageStatus = stateObject[pagekey].valid;
+        let pageIcon = document.querySelectorAll('.vh-id-header-'+pagekey);
+        let pageCheck = document.querySelectorAll('.vh-id-header-'+pagekey+'-check');
+        if(pageStatus){
+            for (let i = 0; i < pageIcon.length; i++){
+                pageIcon[i].classList.add('vh-green-fade');
+            }
+            for (let i = 0; i < pageCheck.length; i++){
+                pageCheck[i].classList.remove('vh-hidden');
+            }
+        }else{
+            for (let i = 0; i < pageIcon.length; i++){
+                pageIcon[i].classList.remove('vh-green-fade');
+            }
+            
+            for (let i = 0; i < pageCheck.length; i++){
+                pageCheck[i].classList.add('vh-hidden');
+            }
+        }
+    }
+}
+
 // PAGEVALIDATOR: check a page for validity
 app.getSharedData().checkValidity = function (page, pageName) {
 
     app.getSharedData().pageValidStatus[pageName].valid = true;
     var list = page.getChildren();
     for(var i=0; i<list.getLength(); i++) {
-        // if(list.get(i).getBOAttr() !== null){
-        //     // check validity of BO
-        //     if(!list.get(i).getBOAttr().isValid()){
-        //         // if(app.getSharedData().pageValidStatus.hasOwnProperty()){
-        //             app.getSharedData().pageValidStatus[pageName].valid = false;
-        //             return;
-        //         // }
-        //     }
-        // }
         app.getSharedData().checkWidgetValidity(list.get(i), pageName);
 
         if(app.getSharedData().pageValidStatus[pageName].valid == false) { break }; // once we have a false condition, break out of the loops
@@ -44,13 +84,17 @@ app.getSharedData().checkValidity = function (page, pageName) {
 app.getSharedData().checkWidgetValidity = function (widget, pageName){
     var children = widget.getChildren();
     //check if we have a business object backing this widget
-    if(widget.getBOAttr() !== null){
+    try {
+        // check if our widget has a business object and is not a table
+        if(widget.getBOAttr() !== null && widget.getType() !== "aggregationListContainer"){
             //check if valid, if not set page to not valid
-            // debugger;
             if(!widget.getBOAttr().isValid()){
                 app.getSharedData().pageValidStatus[pageName].valid = false;
                 return false; //once we have one invalid we can exit
             }
+        }
+    } catch (error) {
+        debugger;        
     }
 
     // now call all the children if there are any
