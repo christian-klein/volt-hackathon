@@ -1,79 +1,60 @@
-<!doctype html>
-<html>
-  <head>
-    <!-- Place your kit's code here -->
-    <script src="https://kit.fontawesome.com/93511ca699.js" crossorigin="anonymous"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="vh.css">
-  </head>
-  <body>
-
-
-
 <div  class="vh-header">
   <table>
     <tr>
-      <td class="vh-header-table-cell-icon fa-stack vh-id-header-welcome">
+      <td class="vh-header-table-cell-icon fa-stack vh-id-header-P_Welcome" onclick="NitroApplication.getSharedData().navigateToPage('P_Welcome')">
         <i class="fas fa-home fa-stack-1x" data-fa-transform="shrink-7 up-0" data-fa-mask="fas fa-circle" ></i>
-        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-welcome-check"></i>
+        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-P_Welcome-check"></i>
       </td>
       <td class="vh-header-table-separator"><i class="fas fa-angle-double-right "></i></td>
-      <td class="vh-header-table-cell-icon fa-stack vh-id-header-general">
+      <td class="vh-header-table-cell-icon fa-stack vh-id-header-P_General" onclick="NitroApplication.getSharedData().navigateToPage('P_General')">
         <i class="fas fa-info-circle fa-stack-1x"></i>
-        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-general-check"></i>
+        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-P_General-check"></i>
       </td>
       <td class="vh-header-table-separator"><i class="fas fa-angle-double-right "></i></td>
-      <td class="vh-header-table-cell-icon fa-stack vh-id-header-addresses">
+      <td class="vh-header-table-cell-icon fa-stack vh-id-header-P_Addresses" onclick="NitroApplication.getSharedData().navigateToPage('P_Addresses')">
         <i class="fas fa-map-marked-alt fa-stack-1x"
            data-fa-transform="shrink-7 up-0" 
            data-fa-mask="fas fa-circle"
         ></i>
-        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-addresses-check"></i>
+        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-P_Addresses-check"></i>
       </td>
       <td class="vh-header-table-separator"><i class="fas fa-angle-double-right "></i></td>
-      <td class="vh-header-table-cell-icon fa-stack vh-id-header-user">
+      <td class="vh-header-table-cell-icon fa-stack vh-id-header-P_User" onclick="NitroApplication.getSharedData().navigateToPage('P_User')">
         <i class="fas fa-address-card fa-stack-1x"
            data-fa-transform="shrink-7 up-0" 
            data-fa-mask="fas fa-circle"
         ></i>
-        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-user-check"></i>
+        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-P_User-check"></i>
       </td>
       <td class="vh-header-table-separator"><i class="fas fa-angle-double-right "></i></td>
-      <td class="vh-header-table-cell-icon fa-stack vh-id-header-pay">
+      <td class="vh-header-table-cell-icon fa-stack vh-id-header-P_Pay" onclick="NitroApplication.getSharedData().navigateToPage('P_Pay')">
         <i class="fas fa-money-check-alt fa-stack-1x"
            data-fa-transform="shrink-7 up-0" 
            data-fa-mask="fas fa-circle"
         ></i>
-        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-pay-check"></i>
+        <i class="fas fa-check fa-stack-1x vh-check vh-hidden vh-id-header-P_Pay-check"></i>
       </td>
       <td class="vh-header-table-separator"><i class="fas fa-angle-double-right "></i></td>
-      <td class="vh-header-table-cell-icon fa-stack vh-id-header-commodity">
+      <td class="vh-header-table-cell-icon fa-stack vh-id-header-P_Code" onclick="NitroApplication.getSharedData().navigateToPage('P_Code')">
         <i class="fas fa-tags fa-stack-1x"
            data-fa-transform="shrink-7 up-0" 
            data-fa-mask="fas fa-circle"
         ></i>
-        <i class="fas fa-check fa-stack-1x vh-check  vh-hidden vh-id-header-commodity-check"></i>
+        <i class="fas fa-check fa-stack-1x vh-check  vh-hidden vh-id-header-P_Code-check"></i>
       </td>
     </tr>
     <tr>
-      <td class="vh-header-table-cell-text rotate vh-id-header-welcome-text">Welcome</td>
+      <td class="vh-header-table-cell-text rotate vh-id-header-welcome-text" onclick="NitroApplication.getSharedData().navigateToPage('P_Welcome')">Welcome</td>
       <td></td>
-      <td class="vh-header-table-cell-text rotate vh-id-header-general-text">General</td>
+      <td class="vh-header-table-cell-text rotate vh-id-header-general-text" onclick="NitroApplication.getSharedData().navigateToPage('P_General')">General</td>
       <td></td>
-      <td class="vh-header-table-cell-text rotate vh-id-header-addresses-text">Address</td>
+      <td class="vh-header-table-cell-text rotate vh-id-header-addresses-text" onclick="NitroApplication.getSharedData().navigateToPage('P_Addresses')">Address</td>
       <td></td>
-      <td class="vh-header-table-cell-text rotate vh-id-header-user-text">User</td>
+      <td class="vh-header-table-cell-text rotate vh-id-header-user-text" onclick="NitroApplication.getSharedData().navigateToPage('P_User')">User</td>
       <td></td>
-      <td class="vh-header-table-cell-text rotate vh-id-header-pay-text">Pay</td>
+      <td class="vh-header-table-cell-text rotate vh-id-header-pay-text" onclick="NitroApplication.getSharedData().navigateToPage('P_Pay')">Pay</td>
       <td></td>
-      <td class="vh-header-table-cell-text rotate vh-id-header-commodity-text">Codes</td>
+      <td class="vh-header-table-cell-text rotate vh-id-header-commodity-text" onclick="NitroApplication.getSharedData().navigateToPage('P_Code')">Codes</td>
     </tr>
   </table>
 </div>
-
-
-
-
-  </body>
-</html>
