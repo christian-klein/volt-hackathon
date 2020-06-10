@@ -8,6 +8,12 @@ app.getSharedData().configuration = {
         headerHTMLTemplateField: "F_HTMLHeader_Welcome"
     },
     pages: {
+        P_Splash: {
+            valid: true,
+            hasBeenVisited: true,
+            copyHeaderTo: false,
+            headerHTMLField: ""
+        },
         P_Welcome: {
             valid: false,
             hasBeenVisited: false,
@@ -43,24 +49,6 @@ app.getSharedData().configuration = {
             hasBeenVisited: false,
             copyHeaderTo: true,
             headerHTMLField: "F_HTMLHeader_Codes"
-        }
-    },
-    filteredLists: {
-        countries: {
-            addressCountries: {
-                field: "F_CountryFilter",
-                listPage: "P_Addresses",
-                listStyleId: "vh-id-filterlist-addresses",
-                valuesTableName: "F_CountriesTable",
-                valuesFieldName: "F_CountryTableName"
-            },
-            payCountries: {
-                field: "F_BankCountry",
-                listPage: "P_Pay",
-                listStyleId: "vh-id-filterlist-pay",
-                valuesTableName: "F_CountriesTable",
-                valuesFieldName: "F_CountryTableName"
-            }
         }
     }
 };
@@ -109,16 +97,22 @@ app.getSharedData().navigateToPageTriggers = function () {
 
 // PAGEVALIDATOR: set page highlights
 app.getSharedData().highlightCurrentPage = function () {
+debugger;
+    let currentPageId;
 
-    if (form.getCurrentPage()) { // initial render calls show with no current page set
-        for (let pagekey of form.getPageIds()) {
-            if (pagekey == form.getCurrentPage().getId()) {
-                app.getSharedData().highlightPage(pagekey);
-            } else {
-                app.getSharedData().removeHighlightPage(pagekey);
-            }
+    if (!form.getCurrentPage()){
+        // first time show is called on the page, curentPage returns null, so we just get the first page
+        currentPageId = form.getPageIds()[0];
+    }else{
+        currentPageId = form.getCurrentPage().getId();
+    }
+
+    for (let pagekey of form.getPageIds()) {
+        if (pagekey == currentPageId) {
+            app.getSharedData().highlightPage(pagekey);
+        } else {
+            app.getSharedData().removeHighlightPage(pagekey);
         }
-
     }
 }
 
@@ -226,132 +220,64 @@ app.getSharedData().checkWidgetValidity = function (widget, pageName) {
 
 // COUNTRIES: populate the <UL> with the countries from the table the service populated once the service is done
 var srv = form.getServiceConfiguration("SC_AllCountriesTable");
-srv.connectEvent('onCallFinished', function (success) {
-    if (success) {
+  srv.connectEvent('onCallFinished', function(success)
+   {
+    if(success) {
+      app.getSharedData().countriesList = document.querySelector('.value-list');
+      app.getSharedData().countriesListTable = BO.F_CountriesTable;
+      app.getSharedData().countriesListTableLength = BO.F_CountriesTable.getLength();
 
-        //step through boxes and populate them
-        for (let listName in app.getSharedData().configuration.filteredLists.countries) {
-            app.getSharedData().populateFilteredList('countries', listName);
-        }
+      for(var i = 0; i < app.getSharedData().countriesListTableLength; i++) {
+        app.getSharedData().loadCoutriesListItem(app.getSharedData().countriesList, BO.F_CountriesTable.get(i).F_CountryTableName.getValue());
+      }
 
-        // TODO: Move below into helper function we called above
-        // listConfig.countriesList = document.querySelector('.vh-id-filterlist-addresses');
-        // listConfig.countriesListTable = BO.F_CountriesTable;
-        // listConfig.countriesListTableLength = BO.F_CountriesTable.getLength();
-
-        // for (var i = 0; i < listConfig.countriesListTableLength; i++) {
-        //     app.getSharedData().loadCoutriesListItem(listConfig.countriesList, BO.F_CountriesTable.get(i).F_CountryTableName.getValue());
-        // }
-
-        // listConfig.countriesvalueListArray = [...document.querySelectorAll('.vh-id-filterlist-addresses li')];
-        // // add an onClick event to push the clicked country into the country field and close the country list
-        // listConfig.countriesvalueListArray.forEach(list_item => {
-        //     list_item.addEventListener('click', evt => {
-        //         BO.F_CountryFilter.setValue(list_item.textContent);
-        //         listConfig.countriesvalueListArray.forEach(dropdown => {
-        //             dropdown.classList.add('closed');
-        //         });
-        //     });
-        // });
-    }
-});
-
-// filteredLists: {
-//     countries: {
-//         addressCountries: {
-//             field: "F_CountryFilter",
-//             listPage: "P_Addresses",
-//             listStyleId: "vh-id-filterlist-addresses",
-//             valuesTableName: "F_CountriesTable",
-//             valuesFieldName: "F_CountriesTableName"
-//         },
-//         payCountries: {
-//             field: "F_BankCountry",
-//             listPage: "P_Pay",
-//             listStyleId: "vh-id-filterlist-pay",
-//             valuesTableName: "F_CountriesTable",
-//             valuesFieldName: "F_CountriesTableName"
-//             // (Generated) valueField: BO field object
-//             // (Generated) valueListTable: BO of table holding values
-//             // (Generated) valueList : <UL> HTML of values based on style class
-//             // (Generated) valueListArray: <LI> list of HTML elements
-//         }
-//     }
-// }
-
-
-
-// FILTERED DROPDOWN: helper function to create the listitems and attach event
-app.getSharedData().populateFilteredList = function (listType, listName) {
-
-    //get config
-    let listConfig = app.getSharedData().configuration.filteredLists[listType][listName];
-
-    listConfig.valueField = get (BO, listConfig.field);
-    listConfig.valueListTable = get(BO, listConfig.valuesTableName);
-    // listConfig.valueList = document.querySelector('.'+listConfig.listStyleId);
-
-    for (var i = 0; i < listConfig.valueListTable.getLength(); i++) {
-        app.getSharedData().loadFilteredListItem(listConfig.valueList, listConfig.valueListTable.get(i)[listConfig.valuesFieldName].getValue());
-    }
-
-    debugger;
-
-
-    listConfig.valueListArray = [...document.querySelectorAll('.'+listConfig.listStyleId+' li')];
-    // add an onClick event to push the clicked value into the data field field and close the list
-    listConfig.valueListArray.forEach(list_item => {
+      app.getSharedData().countriesListArray = [...document.querySelectorAll('.value-list li')];
+      // add an onClick event to push the clicked country into the country field and close the country list
+      app.getSharedData().countriesListArray.forEach(list_item => {
         list_item.addEventListener('click', evt => {
-            listConfig.valueField.setValue(list_item.textContent);
-            listConfig.valueListArray.forEach(dropdown => {
-                dropdown.classList.add('closed');
-            });
+          BO.F_CountryFilter.setValue(list_item.textContent);
+          app.getSharedData().countriesListArray.forEach(dropdown => {
+            // app.getSharedData().countriesList.classList.remove('open');
+            dropdown.classList.add('closed');
+          });
         });
-    });
-
-    // register keydown event to cover clearing the field since Volts onItemLiveChange is not triggering when
-    // the last character is deleted
-    listConfig.valueField.addEventListener("keyup", function (e) {
-
-        if (!listConfig.valueField.getDisplayValue()) {
-            for (let i = 0; i < listConfig.valueListArray.length; i++) {
-                listConfig.valueListArray[i].classList.remove('closed');
-            }
-        }
-    });
-
-    // Have to use the JS blur over the Volt blur since it is to aggressive and closes list even on scrollbar click
-    // of the countries list
-    listConfig.valueField.addEventListener('blur', () => {
-        listConfig.valueList.classList.remove('open');
+      });
+      
+    }
 });
-}
 
-
-// FILTERED DROPDOWN: helper function to create the listitems
-app.getSharedData().loadFilteredListItem = function (valueList, list_item_name) {
+// COUNTRIES: helper function to create the listitems
+app.getSharedData().loadCoutriesListItem = function (listItem, list_item_name) {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(list_item_name));
-    valueList.appendChild(li);
+    listItem.appendChild(li);
 }
 
-// FILTERED DROPDOWN: Catch the click event and ensure the hiding of the box only when outside the areas
-document.addEventListener('click', evt => {
+// COUNTRIES: register keydown event to cover clearing the field since Volts onItemLiveChange is not triggering when
+// the last character is deleted
+var e_country_field = document.querySelector('.country-field');
 
-    //we need to iterate over all lists
-    if(app.getSharedData().configuration){
-        for (let listType in app.getSharedData().configuration.filteredLists) {
-            for (let listConfig in app.getSharedData().configuration.filteredLists[listType]) {
-                
-                if(listConfig.valueList && listConfig.valuesField){
-                    const isDropdown = listConfig.valueList.contains(evt.target);
-                    const isInput = listConfig.valueField.contains(evt.target);
-    
-                    if (!isDropdown && !isInput) {
-                        app.getSharedData().valueList.classList.remove('open');
-                    }
-                }
-            }
+e_country_field.addEventListener("keyup", function () {
+
+    var f_country = form.getPage('P_Addresses').F_CountryFilter.getDisplayValue(); 
+    if( !f_country){
+        for (let i = 0; i < app.getSharedData().countriesListArray.length; i++){
+            app.getSharedData().countriesListArray[i].classList.remove('closed');
         }
     }
 });
+
+// COUNTRIES: Have to use the JS blur over the Volt blur since it is to aggressive and closes list even on scrollbar click
+// of the countries list
+e_country_field.addEventListener('blur', () => {
+    app.getSharedData().countriesList.classList.remove('open');
+  });
+
+// COUNTRIES: Catch the click event and ensure the hiding of the box only when outside the areas
+document.addEventListener('click', evt => {
+    const isDropdown = app.getSharedData().countriesList.contains(evt.target);
+    const isInput = e_country_field.contains(evt.target);
+    if (!isDropdown && !isInput) {
+        app.getSharedData().countriesList.classList.remove('open');
+    }
+  });
