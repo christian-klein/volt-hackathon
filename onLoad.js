@@ -1,6 +1,6 @@
 // Initialize
 
-// PAGEVALIDATOR: object to hold validation info
+// object to hold configuration needed in the code
 app.getSharedData().configuration = {
     global: {
         formName: "F_Vendor_Registration",
@@ -79,36 +79,41 @@ for (let pagekey of Object.keys(app.getSharedData().configuration.pages)) {
 app.getSharedData().navigateToPage = function (pageName) {
 
     form.selectPage(pageName);
-    app.getSharedData().navigateToPageTriggers();
+    app.getSharedData().navigateToPageTriggers(pageName);
 
 }
 
 // PAGENAVIGATOR: Navigate to a page
-app.getSharedData().navigateToPageTriggers = function () {
+app.getSharedData().navigateToPageTriggers = function (pageName) {
 
-    if (form.getCurrentPage()) // initial render calls show with no current page set
-        app.getSharedData().configuration.pages[form.getCurrentPage().getId()].hasBeenVisited = true;
+    if(!pageName){
+        pageName = form.getCurrentPage(); // currentPage() lags behind during onShow
+        if(!pageName){
+            form.getPageIds()[0]; //get the first page
+        }
+    }
+
+    app.getSharedData().configuration.pages[form.getCurrentPage().getId()].hasBeenVisited = true;
 
     app.getSharedData().checkValidityAllPages();
     app.getSharedData().adjustHeader();
-    app.getSharedData().highlightCurrentPage();
+    app.getSharedData().highlightCurrentPage(pageName);
 
 }
 
 // PAGEVALIDATOR: set page highlights
-app.getSharedData().highlightCurrentPage = function () {
+app.getSharedData().highlightCurrentPage = function (pageName) {
 debugger;
-    let currentPageId;
 
-    if (!form.getCurrentPage()){
-        // first time show is called on the page, curentPage returns null, so we just get the first page
-        currentPageId = form.getPageIds()[0];
-    }else{
-        currentPageId = form.getCurrentPage().getId();
+    if(!pageName){
+        pageName = form.getCurrentPage(); // currentPage() lags behind during onShow
+        if(!pageName){
+            form.getPageIds()[0]; //get the first page
+        }
     }
 
     for (let pagekey of form.getPageIds()) {
-        if (pagekey == currentPageId) {
+        if (pagekey == pageName) {
             app.getSharedData().highlightPage(pagekey);
         } else {
             app.getSharedData().removeHighlightPage(pagekey);
